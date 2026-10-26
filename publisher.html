@@ -22,6 +22,8 @@
     <h2>The publisher isn't running on this computer</h2>
     <p>Start it in a terminal, then reload this page:</p>
     <pre class="code">tiktok_publish.py serve</pre>
+    <p>If it is already running, your browser may be blocking this page from reaching it. Allow this site to
+    access apps and services on this device (the permissions icon next to the address bar), then reload.</p>
   </section>
 
   <section id="connect" hidden>
@@ -61,8 +63,10 @@
   function show(id) { ['offline', 'connect', 'ready'].forEach(function (s) { $(s).hidden = s !== id; }); }
 
   function api(path, body) {
-    return fetch(HELPER + path, body ? {method: 'POST', headers: {'Content-Type': 'application/json'},
-                                        body: JSON.stringify(body)} : {})
+    // the helper is on this computer (loopback), so browsers ask before the page may reach it
+    var opts = {targetAddressSpace: 'loopback'};
+    if (body) { opts.method = 'POST'; opts.headers = {'Content-Type': 'application/json'}; opts.body = JSON.stringify(body); }
+    return fetch(HELPER + path, opts)
       .then(function (r) { return r.json(); });
   }
 

@@ -48,7 +48,7 @@
       e.hidden = false;
       e.textContent = 'This sign-in did not start from Cyrex Publisher, so it was ignored. Start again from the publisher page.';
     } else {
-      fetch('http://127.0.0.1:8765/exchange', {method: 'POST', headers: {'Content-Type': 'application/json'},
+      fetch('http://127.0.0.1:8765/exchange', {targetAddressSpace: 'loopback', method: 'POST', headers: {'Content-Type': 'application/json'},
                                               body: JSON.stringify({code: q.get('code')})})
         .then(function (r) { return r.json(); })
         .then(function (r) {
