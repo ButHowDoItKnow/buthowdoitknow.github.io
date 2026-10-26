@@ -1,26 +1,198 @@
+/* But How Do It Know? — night sky, gold wordmark, floating science line-art.
+   Palette is the reel palette (cyrex rig): night navy, gold catchphrase, signal cyan, mint. */
 :root {
-  --bg: #121833;
-  --panel: #1B2030;
-  --text: #E8ECF3;
-  --muted: #C9D1DC;
+  --night: #121833;
+  --night-deep: #0A0F26;
+  --ink: #0B1024;        /* outline colour for the art and the wordmark's drop */
+  --moonlight: #E8ECF3;
+  --muted: #B9C3D3;
   --gold: #FFD34E;
-  --link: #58C4DD;
+  --moon: #FFE9A8;
+  --cyan: #58C4DD;
+  --mint: #7CFFB2;
+  --measure: 34rem;
+  --display: "Lilita One", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
+
 * { box-sizing: border-box; }
+
+html { background: var(--night-deep); }
+
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", "DejaVu Sans", sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(120% 80% at 70% 0%, #1C2550 0%, var(--night) 45%, var(--night-deep) 100%) fixed;
+  color: var(--moonlight);
+  font: 1.125rem/1.6 var(--body);
+  overflow-x: hidden;
 }
-main { max-width: 720px; margin: 0 auto; padding: 48px 16px 64px; }
-a { color: var(--link); }
-h1 { font-size: clamp(2rem, 7vw, 3.2rem); line-height: 1.1; margin: 0 0 8px; }
-h1 .gold, .gold { color: var(--gold); }
-h2 { margin-top: 2em; font-size: 1.25rem; }
-.tagline { color: var(--muted); font-size: 1.15rem; margin: 0 0 32px; }
-.card { background: var(--panel); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
-.links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 24px; }
-.muted { color: var(--muted); font-size: 0.95rem; }
-nav { display: flex; gap: 20px; margin-bottom: 32px; font-size: 0.95rem; }
-footer { margin-top: 48px; color: var(--muted); font-size: 0.9rem; }
+
+a { color: var(--cyan); text-underline-offset: 0.18em; }
+a:hover { color: var(--moonlight); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- sky layer (fixed behind everything) ---------- */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.stars { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* thin the stars behind the text column so no dot lands inside a word */
+.stars {
+  --clear: linear-gradient(90deg, #000 0, #000 calc(50% - 25rem), rgba(0, 0, 0, .12) calc(50% - 18rem),
+           rgba(0, 0, 0, .12) calc(50% + 18rem), #000 calc(50% + 25rem));
+  -webkit-mask-image: var(--clear);
+  mask-image: var(--clear);
+}
+.stars circle { fill: #fff; }
+.stars .tw { animation: twinkle var(--t, 4s) ease-in-out var(--d, 0s) infinite; }
+@keyframes twinkle { 0%, 100% { opacity: var(--o, 0.8); } 50% { opacity: 0.15; } }
+
+.moon {
+  position: absolute;
+  top: 5vh;
+  left: calc(50% + 11rem);
+  width: clamp(7rem, 12vw, 10rem);
+  filter: drop-shadow(0 0 2.5rem rgba(255, 233, 168, 0.35));
+}
+
+/* floating science objects, kept in the side rails */
+.float {
+  position: absolute;
+  width: var(--w, 6.5rem);
+  top: var(--y);
+  opacity: 0;
+  animation:
+    arrive 1.6s cubic-bezier(.2, .7, .2, 1) var(--in, 0s) forwards,
+    bob var(--dur, 9s) ease-in-out var(--in, 0s) infinite;
+}
+.rail { position: absolute; top: 0; bottom: 0; width: max(3.5rem, calc(50% - 21rem)); }
+.rail-left { left: 0; }
+.rail-right { right: 0; }
+/* --x runs 0..1 across the rail, so an object never pokes into the text column */
+.rail-left .float { left: calc(var(--x) * (100% - var(--w))); }
+.rail-right .float { right: calc(var(--x) * (100% - var(--w))); }
+.float svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+@keyframes arrive { from { opacity: 0; } to { opacity: var(--op, 0.92); } }
+@keyframes bob {
+  0%, 100% { transform: translate(0, 0) rotate(calc(var(--rot, 6deg) * -1)); }
+  50%      { transform: translate(var(--dx, 6px), var(--dy, -18px)) rotate(var(--rot, 6deg)); }
+}
+.spin { transform-box: fill-box; transform-origin: center; animation: spin 14s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.orbit { transform-box: view-box; transform-origin: 50px 50px; animation: spin 10s linear infinite; }
+
+/* ---------- content ---------- */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: calc(var(--measure) + 2rem);
+  margin: 0 auto;
+  padding: 26vh 1rem 4rem;
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 11vw, 6.2rem);
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  color: var(--gold);
+  text-shadow: 0 0.06em 0 var(--ink), 0 0.14em 0.3em rgba(0, 0, 0, 0.45);
+  margin: 0 0 1.5rem;
+}
+
+.lede { font-size: 1.3rem; line-height: 1.45; margin: 0 0 1rem; }
+.joke { color: var(--muted); margin: 0 0 3.5rem; }
+
+h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.75rem;
+  letter-spacing: 0.01em;
+  color: var(--moonlight);
+  margin: 0 0 1rem;
+}
+
+.episodes { list-style: none; counter-reset: ep; padding: 0; margin: 0 0 3.5rem; }
+.episodes li {
+  counter-increment: ep;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: 0.75rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba(185, 195, 211, 0.18);
+}
+.episodes li:last-child { border-bottom: 1px solid rgba(185, 195, 211, 0.18); }
+.episodes li::before {
+  content: counter(ep);
+  grid-row: span 2;
+  font-family: var(--display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--cyan);
+}
+.episodes strong { font-weight: 700; }
+.episodes span { color: var(--muted); }
+
+.follow { display: flex; flex-wrap: wrap; gap: 0.75rem; padding: 0; margin: 0 0 4rem; list-style: none; }
+.follow a {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(10, 15, 38, 0.55);
+  transition: background-color 0.15s, color 0.15s;
+}
+.follow a:hover { background: var(--gold); color: var(--ink); }
+
+footer { color: var(--muted); font-size: 0.95rem; }
+footer p { margin: 0.3rem 0; }
+footer .legal a { margin-right: 1.25rem; }
+
+/* ---------- policy pages ---------- */
+.doc main { padding-top: 3rem; max-width: 44rem; }
+.doc nav { margin-bottom: 2rem; }
+.doc nav a { margin-right: 1.25rem; }
+.doc h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 3.2rem);
+  line-height: 1.05;
+  color: var(--gold);
+  text-shadow: 0 0.06em 0 var(--ink);
+  margin: 0 0 0.5rem;
+}
+.doc h2 { font-size: 1.35rem; margin: 2.2rem 0 0.5rem; }
+.doc .updated { color: var(--muted); margin: 0 0 2rem; }
+
+/* ---------- small screens: fewer, smaller, fainter objects at the very edges ---------- */
+@media (max-width: 1100px) {
+  .float { --w: 4.6rem; --op: 0.55; }
+}
+@media (max-width: 720px) {
+  /* the sky scrolls with the page here, and the art stays in the band above the wordmark */
+  body { position: relative; }
+  .sky { position: absolute; }
+  .stars { -webkit-mask-image: none; mask-image: none; opacity: .6; }
+  main { padding-top: 13.5rem; }
+  .moon { left: auto; right: -1.5rem; top: 1rem; width: 7rem; }
+  .float { display: none; --op: 0.9; }
+  /* plain widths: the inline --w on each object is for the desktop rails */
+  .rail-left .float.m1 { display: block; left: 1rem; top: 1.5rem; width: 5.5rem; }
+  .rail-left .float.m2 { display: block; left: 7rem; top: 6rem; width: 3.6rem; }
+  .rail-right .float.m3 { display: block; right: 7.5rem; top: 1.5rem; width: 4.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float { animation: arrive 0.01s forwards; }
+  .stars .tw, .spin, .orbit { animation: none; }
+}

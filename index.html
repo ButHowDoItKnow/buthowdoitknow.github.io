@@ -5,27 +5,208 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>But How Do It Know?</title>
 <meta name="description" content="Short animated explainers about the everyday tech you never think about.">
+<meta name="theme-color" content="#121833">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lilita+One&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <h1>But How Do It <span class="gold">Know?</span></h1>
-  <p class="tagline">Short animated explainers about the everyday tech you never think about.</p>
 
-  <div class="card">
-    <p>Your car key, a solar panel, the thing in your pocket. Each episode takes one everyday device and shows,
-    step by step, how it actually works.</p>
-    <ul class="links">
-      <li><a href="https://www.youtube.com/@buthowdoitknow">YouTube</a></li>
-      <li><a href="https://www.instagram.com/buthowdoitknow">Instagram</a></li>
-      <li><a href="https://www.tiktok.com/@buthowdoitknow">TikTok</a></li>
-    </ul>
+<div class="sky" aria-hidden="true">
+  <svg class="stars" id="stars"></svg>
+
+  <svg class="moon" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#FFE9A8"/>
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#F3D88A" stroke-width="3"/>
+    <circle cx="34" cy="36" r="9" fill="#F0D58A"/>
+    <circle cx="62" cy="28" r="5" fill="#F0D58A"/>
+    <circle cx="64" cy="60" r="12" fill="#F0D58A"/>
+    <circle cx="38" cy="68" r="6" fill="#F0D58A"/>
+    <circle cx="78" cy="44" r="3.5" fill="#F0D58A"/>
+  </svg>
+
+  <div class="rail rail-left">
+    <!-- satellite -->
+    <div class="float m1" style="--x:.35; --y:7%; --w:8rem; --dur:11s; --rot:8deg; --in:.2s">
+      <svg viewBox="0 0 120 80"><g stroke="#0B1024" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M40 40h40" fill="none"/>
+        <rect x="4" y="22" width="36" height="36" rx="2" fill="#58C4DD"/>
+        <path d="M16 22v36M28 22v36M4 34h36M4 46h36" fill="none" stroke-width="1.5"/>
+        <rect x="80" y="22" width="36" height="36" rx="2" fill="#58C4DD"/>
+        <path d="M92 22v36M104 22v36M80 34h36M80 46h36" fill="none" stroke-width="1.5"/>
+        <rect x="48" y="26" width="24" height="28" rx="4" fill="#C9D1DC"/>
+        <rect x="52" y="32" width="16" height="6" rx="1" fill="#FFD34E"/>
+        <path d="M60 26V15" fill="none"/>
+        <path d="M49 15a11 6 0 0 0 22 0Z" fill="#E8ECF3"/>
+        <circle cx="60" cy="8" r="3" fill="#FF4D4D"/>
+      </g></svg>
+    </div>
+
+    <!-- atom -->
+    <div class="float m2" style="--x:.8; --y:25%; --w:6.5rem; --dur:9s; --rot:-5deg; --dy:-14px; --in:.5s">
+      <svg viewBox="0 0 100 100"><g class="orbit" fill="none" stroke="#58C4DD" stroke-width="3">
+        <ellipse cx="50" cy="50" rx="44" ry="15"/>
+        <ellipse cx="50" cy="50" rx="44" ry="15" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="50" rx="44" ry="15" transform="rotate(120 50 50)"/>
+        <circle cx="94" cy="50" r="4.5" fill="#7CFFB2" stroke="#0B1024" stroke-width="2"/>
+        <circle cx="28" cy="88.1" r="4.5" fill="#7CFFB2" stroke="#0B1024" stroke-width="2"/>
+        <circle cx="28" cy="11.9" r="4.5" fill="#7CFFB2" stroke="#0B1024" stroke-width="2"/>
+      </g>
+      <g stroke="#0B1024" stroke-width="2">
+        <circle cx="46" cy="47" r="7" fill="#FFD34E"/><circle cx="54" cy="47" r="7" fill="#FF4D4D"/>
+        <circle cx="50" cy="54" r="7" fill="#FFD34E"/>
+      </g></svg>
+    </div>
+
+    <!-- bacterium -->
+    <div class="float extra" style="--x:.15; --y:42%; --w:7.5rem; --dur:13s; --rot:12deg; --dx:10px; --in:.8s">
+      <svg viewBox="0 0 130 70"><g stroke="#0B1024" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M105 35q6-9 12 0t12 0M24 30q-6-8-12-2t-11-2M24 42q-6 8-12 2t-11 3" fill="none" stroke="#7CFFB2" stroke-width="2"/>
+        <rect x="22" y="14" width="84" height="42" rx="21" fill="#7CFFB2"/>
+        <path d="M40 14l-3-7M60 14v-8M80 14l3-7M44 56l-3 7M68 56v7M88 56l3 6" fill="none" stroke-width="2"/>
+        <circle cx="48" cy="32" r="5" fill="#3FBF85" stroke="none"/>
+        <circle cx="70" cy="40" r="7" fill="#3FBF85" stroke="none"/>
+        <circle cx="86" cy="28" r="4" fill="#3FBF85" stroke="none"/>
+      </g></svg>
+    </div>
+
+    <!-- periodic tile: silicon, the stuff in solar cells and chips -->
+    <div class="float" style="--x:.7; --y:58%; --w:6rem; --dur:10s; --rot:-7deg; --in:1.1s">
+      <svg viewBox="0 0 90 100"><g>
+        <rect x="3" y="3" width="84" height="94" rx="6" fill="#1B2450" stroke="#58C4DD" stroke-width="3"/>
+        <text x="12" y="22" fill="#58C4DD" style="font:700 14px var(--body)">14</text>
+        <text x="45" y="64" text-anchor="middle" fill="#FFD34E" style="font:48px var(--display)">Si</text>
+        <text x="45" y="82" text-anchor="middle" fill="#E8ECF3" style="font:700 11px var(--body)">Silicon</text>
+      </g></svg>
+    </div>
+
+    <!-- flask -->
+    <div class="float extra" style="--x:.2; --y:74%; --w:5.5rem; --dur:12s; --rot:6deg; --in:1.4s">
+      <svg viewBox="0 0 80 100"><g stroke="#0B1024" stroke-width="2.5" stroke-linejoin="round">
+        <circle cx="44" cy="20" r="3" fill="#7CFFB2" stroke="none" opacity=".8"/>
+        <circle cx="36" cy="8" r="2" fill="#7CFFB2" stroke="none" opacity=".6"/>
+        <path d="M30 32h20v8l22 46a6 6 0 0 1-5.5 8.5H13.5A6 6 0 0 1 8 86l22-46Z" fill="rgba(232,236,243,.16)"/>
+        <path d="M17.6 66h44.8l9.6 20a6 6 0 0 1-5.5 8.5H13.5A6 6 0 0 1 8 86Z" fill="#7CFFB2"/>
+        <rect x="26" y="26" width="28" height="7" rx="2" fill="#C9D1DC"/>
+        <circle cx="32" cy="78" r="3" fill="#E8ECF3" stroke="none"/><circle cx="46" cy="84" r="2" fill="#E8ECF3" stroke="none"/>
+      </g></svg>
+    </div>
+
+    <!-- DNA -->
+    <div class="float" style="--x:.75; --y:86%; --w:3.6rem; --dur:14s; --rot:10deg; --in:1.7s">
+      <svg viewBox="0 0 60 130"><g fill="none" stroke-linecap="round">
+        <path d="M41.8 11H18.2 M49.9 19H10.1 M44.9 27H15.1 M15.1 43H44.9 M10.1 51H49.9 M18.2 59H41.8 M34.2 67H25.8 M47.3 75H12.7 M49 83H11 M38.1 91H21.9 M21.9 99H38.1 M11 107H49 M12.7 115H47.3" stroke="#B9C3D3" stroke-width="2.5"/>
+        <path d="M30.0 5 36.2 8 41.8 11 46.2 14 49.0 17 50.0 20 49.0 23 46.2 26 41.8 29 36.2 32 30.0 35 23.8 38 18.2 41 13.8 44 11.0 47 10.0 50 11.0 53 13.8 56 18.2 59 23.8 62 30.0 65 36.2 68 41.8 71 46.2 74 49.0 77 50.0 80 49.0 83 46.2 86 41.8 89 36.2 92 30.0 95 23.8 98 18.2 101 13.8 104 11.0 107 10.0 110 11.0 113 13.8 116 18.2 119 23.8 122 30.0 125" stroke="#58C4DD" stroke-width="4.5"/>
+        <path d="M30.0 5 23.8 8 18.2 11 13.8 14 11.0 17 10.0 20 11.0 23 13.8 26 18.2 29 23.8 32 30.0 35 36.2 38 41.8 41 46.2 44 49.0 47 50.0 50 49.0 53 46.2 56 41.8 59 36.2 62 30.0 65 23.8 68 18.2 71 13.8 74 11.0 77 10.0 80 11.0 83 13.8 86 18.2 89 23.8 92 30.0 95 36.2 98 41.8 101 46.2 104 49.0 107 50.0 110 49.0 113 46.2 116 41.8 119 36.2 122 30.0 125" stroke="#FFD34E" stroke-width="4.5"/>
+      </g></svg>
+    </div>
   </div>
 
+  <div class="rail rail-right">
+    <!-- microscope -->
+    <div class="float" style="--x:.6; --y:22%; --w:6.5rem; --dur:10s; --rot:-6deg; --in:.35s">
+      <svg viewBox="0 0 80 100"><g stroke="#0B1024" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M54 86V72C68 62 66 40 48 30" fill="none" stroke-width="11"/>
+        <path d="M54 86V72C68 62 66 40 48 30" fill="none" stroke="#FFD34E" stroke-width="6"/>
+        <path d="M8 94h62a5 5 0 0 0-5-9H13a5 5 0 0 0-5 9Z" fill="#C9D1DC"/>
+        <rect x="12" y="62" width="40" height="6" rx="2" fill="#C9D1DC"/>
+        <rect x="20" y="58" width="20" height="4" rx="1" fill="#7CFFB2"/>
+        <g transform="rotate(-28 36 34)">
+          <rect x="28" y="16" width="16" height="34" rx="3" fill="#58C4DD"/>
+          <rect x="30" y="5" width="12" height="11" rx="2" fill="#E8ECF3"/>
+          <rect x="31" y="50" width="10" height="7" rx="1.5" fill="#C9D1DC"/>
+        </g>
+        <circle cx="61" cy="50" r="5" fill="#FF4D4D"/>
+      </g></svg>
+    </div>
+
+    <!-- jet engine, front view; the fan turns -->
+    <div class="float" style="--x:.15; --y:8%; --w:7rem; --dur:12s; --rot:4deg; --dy:-12px; --in:.1s">
+      <svg viewBox="0 0 100 100"><g stroke="#0B1024" stroke-width="2.5">
+        <circle cx="50" cy="50" r="46" fill="#C9D1DC"/>
+        <circle cx="50" cy="50" r="39" fill="#1B2030"/>
+        <g class="spin" fill="#8C97AB" stroke-width="1.2"><path transform="rotate(0.0 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(25.7 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(51.4 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(77.1 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(102.9 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(128.6 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(154.3 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(180.0 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(205.7 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(231.4 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(257.1 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(282.9 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(308.6 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/><path transform="rotate(334.3 50 50)" d="M50 50 C57 40 60 24 55 12 L46 11 C50 24 48 38 50 50Z"/>
+          <circle cx="50" cy="50" r="10" fill="#E8ECF3" stroke-width="2.5"/>
+          <path d="M50 44a6 6 0 1 1-5.5 8.4" fill="none" stroke-width="2"/>
+        </g>
+      </g></svg>
+    </div>
+
+    <!-- circuit board -->
+    <div class="float extra" style="--x:.85; --y:40%; --w:6.5rem; --dur:11s; --rot:-9deg; --in:.65s">
+      <svg viewBox="0 0 100 100"><g stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="92" height="92" rx="8" fill="#1F5F55" stroke="#0B1024" stroke-width="2.5"/>
+        <path d="M34 24V12H14M50 24V10M66 24V16h18M76 42h14V24M76 58h12v16M66 76v12M42 76v8H16M24 50H10M24 34H14v-8" fill="none" stroke="#7CFFB2" stroke-width="2"/>
+        <g fill="#FFD34E"><circle cx="14" cy="12" r="3"/><circle cx="50" cy="10" r="3"/><circle cx="84" cy="16" r="3"/><circle cx="90" cy="24" r="3"/><circle cx="88" cy="74" r="3"/><circle cx="66" cy="88" r="3"/><circle cx="16" cy="84" r="3"/><circle cx="10" cy="50" r="3"/><circle cx="14" cy="26" r="3"/></g>
+        <path d="M34 30V24 M34 70V76 M30 34H24 M70 34H76 M42 30V24 M42 70V76 M30 42H24 M70 42H76 M50 30V24 M50 70V76 M30 50H24 M70 50H76 M58 30V24 M58 70V76 M30 58H24 M70 58H76 M66 30V24 M66 70V76 M30 66H24 M70 66H76" stroke="#C9D1DC" stroke-width="2.5"/>
+        <rect x="30" y="30" width="40" height="40" rx="3" fill="#1B2030" stroke="#0B1024" stroke-width="2.5"/>
+        <circle cx="37" cy="37" r="2.2" fill="#B9C3D3"/>
+      </g></svg>
+    </div>
+
+    <!-- car key fob: episode 2 -->
+    <div class="float" style="--x:.25; --y:55%; --w:5.5rem; --dur:9.5s; --rot:7deg; --in:.95s">
+      <svg viewBox="0 0 90 110"><g stroke="#0B1024" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M62 34a10 10 0 0 1 0 22M70 26a20 20 0 0 1 0 38M78 18a30 30 0 0 1 0 54" fill="none" stroke="#FFD34E" stroke-width="3"/>
+        <circle cx="30" cy="12" r="9" fill="none" stroke="#C9D1DC" stroke-width="4"/>
+        <rect x="8" y="20" width="44" height="84" rx="20" fill="#3A4470"/>
+        <circle cx="30" cy="44" r="8" fill="#58C4DD"/>
+        <circle cx="30" cy="66" r="8" fill="#58C4DD"/>
+        <circle cx="30" cy="86" r="5.5" fill="#FF4D4D"/>
+        <path d="M27 44v-3a3 3 0 0 1 6 0v3M26.5 44h7v4h-7Z" fill="none" stroke-width="1.6"/>
+      </g></svg>
+    </div>
+
+    <!-- solar panel: episode 1 -->
+    <div class="float extra" style="--x:.7; --y:70%; --w:7.5rem; --dur:13s; --rot:-4deg; --in:1.25s">
+      <svg viewBox="0 0 120 95"><g stroke="#0B1024" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+        <circle cx="102" cy="14" r="9" fill="#FFD34E"/>
+        <path d="M58 62v24M40 90h36" fill="none" stroke="#C9D1DC" stroke-width="4"/>
+        <path d="M22 18h80l-10 46H6Z" fill="#2E6DB4"/>
+        <path d="M42 18l-8 46M62 18l-6 46M82 18l-4 46M16 33.3h82.7M11 48.7h84.5" fill="none" stroke="#9FD9EA" stroke-width="1.5"/>
+      </g></svg>
+    </div>
+
+    <!-- ringed planet -->
+    <div class="float m3" style="--x:.45; --y:85%; --w:7.5rem; --dur:15s; --rot:5deg; --in:1.55s">
+      <svg viewBox="0 0 120 80"><g transform="rotate(-14 60 40)" fill="none" stroke-linecap="round">
+        <ellipse cx="60" cy="40" rx="54" ry="13" stroke="#0B1024" stroke-width="7"/>
+        <ellipse cx="60" cy="40" rx="54" ry="13" stroke="#FFD34E" stroke-width="3.5"/>
+        <circle cx="60" cy="40" r="26" fill="#FF4D4D" stroke="#0B1024" stroke-width="2.5"/>
+        <path d="M37 30h46M35 44h50" stroke="#FF8A8A" stroke-width="4"/>
+        <path d="M6 40A54 13 0 0 0 114 40" stroke="#0B1024" stroke-width="7"/>
+        <path d="M6 40A54 13 0 0 0 114 40" stroke="#FFD34E" stroke-width="3.5"/>
+      </g></svg>
+    </div>
+  </div>
+</div>
+
+<main>
+  <h1 class="wordmark">But How Do It Know?</h1>
+  <p class="lede">Short animated explainers about the everyday tech you never think about.</p>
+  <p class="joke">A thermos keeps hot things hot and cold things cold. But how do it know? Every episode takes one
+  ordinary device and shows, step by step, what is actually going on inside.</p>
+
+  <h2>First episodes</h2>
+  <ol class="episodes">
+    <li><strong>Solar panels</strong> <span>How sunlight on a slab of silicon becomes electricity.</span></li>
+    <li><strong>Car key fobs</strong> <span>Why a thief who copies your unlock code still can't open your car.</span></li>
+  </ol>
+
+  <h2>Watch</h2>
+  <ul class="follow">
+    <li><a href="https://www.youtube.com/@buthowdoitknow">YouTube</a></li>
+    <li><a href="https://www.instagram.com/buthowdoitknow">Instagram</a></li>
+    <li><a href="https://www.tiktok.com/@buthowdoitknow">TikTok</a></li>
+  </ul>
+
   <footer>
-    <p>Contact: <a href="mailto:buthowdoitknow@gmail.com">buthowdoitknow@gmail.com</a></p>
-    <p><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
+    <p>Questions or ideas for an episode: <a href="mailto:buthowdoitknow@gmail.com">buthowdoitknow@gmail.com</a></p>
+    <p class="legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></p>
   </footer>
 </main>
+
+<script src="stars.js"></script>
 </body>
 </html>
