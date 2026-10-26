@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Cyrex Publisher · But How Do It Know?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lilita+One&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="publisher.css">
+</head>
+<body class="doc">
+<div class="sky" aria-hidden="true"><svg class="stars" id="stars"></svg></div>
+<main>
+  <nav><a href="index.html">Home</a></nav>
+  <h1>Cyrex Publisher</h1>
+  <p class="updated">Sends our finished episodes to the But How Do It Know? TikTok account as drafts.</p>
+
+  <section id="offline" hidden>
+    <h2>The publisher isn't running on this computer</h2>
+    <p>Start it in a terminal, then reload this page:</p>
+    <pre class="code">tiktok_publish.py serve</pre>
+  </section>
+
+  <section id="connect" hidden>
+    <h2>Connect your TikTok account</h2>
+    <p>You'll sign in on TikTok and approve two permissions: reading your profile name and picture, and uploading
+    videos to your drafts. Nothing is ever posted without you.</p>
+    <button type="button" class="btn" id="connect-btn">Connect TikTok</button>
+  </section>
+
+  <section id="ready" hidden>
+    <div class="account">
+      <img id="avatar" alt="" width="56" height="56">
+      <div><span class="muted">Connected as</span><br><strong id="name"></strong></div>
+    </div>
+
+    <h2>Choose an episode</h2>
+    <p id="empty" class="muted" hidden>No videos in the outbox yet.</p>
+    <ul id="videos" class="videos"></ul>
+    <button type="button" class="btn" id="upload-btn" disabled>Upload as draft</button>
+
+    <div id="progress" hidden>
+      <div class="bar"><div id="fill"></div></div>
+      <p id="progress-text" class="muted"></p>
+    </div>
+    <p id="done" class="done" hidden>Draft sent. Open TikTok on your phone and tap the notification (or go to Inbox) to
+    add a caption and post it.</p>
+    <p id="error" class="error" hidden></p>
+  </section>
+</main>
+<script src="stars.js"></script>
+<script>
+  var HELPER = 'http://127.0.0.1:8765';
+  var REDIRECT = 'https://buthowdoitknow.github.io/tiktok-callback.html';
+  var $ = function (id) { return document.getElementById(id); };
+  var chosen = null;
+
+  function show(id) { ['offline', 'connect', 'ready'].forEach(function (s) { $(s).hidden = s !== id; }); }
+
+  function api(path, body) {
+    return fetch(HELPER + path, body ? {method: 'POST', headers: {'Content-Type': 'application/json'},
+                                        body: JSON.stringify(body)} : {})
+      .then(function (r) { return r.json(); });
+  }
+
+  function load() {
+    api('/status').then(function (s) {
+      if (!s.user) {
+        show('connect');
+        $('connect-btn').onclick = function () {
+          var state = crypto.getRandomValues(new Uint32Array(4)).join('-');
+          sessionStorage.setItem('tt_state', state);
+          location.href = 'https://www.tiktok.com/v2/auth/authorize/?' + new URLSearchParams({
+            client_key: s.client_key, scope: 'user.info.basic,video.upload', response_type: 'code',
+            redirect_uri: REDIRECT, state: state});
+        };
+        return;
+      }
+      show('ready');
+      $('name').textContent = s.user.display_name;
+      $('avatar').src = s.user.avatar_url;
+      $('empty').hidden = s.videos.length > 0;
+      $('videos').innerHTML = '';
+      s.videos.forEach(function (v) {
+        var li = document.createElement('li');
+        li.innerHTML = '<label><input type="radio" name="video"> <span></span></label>';
+        li.querySelector('span').textContent = v;
+        li.querySelector('input').onchange = function () { chosen = v; $('upload-btn').disabled = false; };
+        $('videos').appendChild(li);
+      });
+    }).catch(function () { show('offline'); });
+  }
+
+  $('upload-btn').onclick = function () {
+    $('upload-btn').disabled = true;
+    $('done').hidden = $('error').hidden = true;
+    $('progress').hidden = false;
+    api('/upload', {video: chosen}).then(function (r) {
+      if (r.error) throw new Error(r.error);
+      poll();
+    }).catch(fail);
+  };
+
+  function poll() {
+    api('/progress').then(function (p) {
+      $('fill').style.width = (p.pct || 0) + '%';
+      $('progress-text').textContent = p.state === 'uploading' ? 'Uploading ' + (p.pct || 0) + '%'
+        : p.state === 'processing' ? 'TikTok is processing the video'
+        : p.state === 'done' ? 'Uploaded' : '';
+      if (p.state === 'done') { $('done').hidden = false; return; }
+      if (p.state === 'error') return fail(new Error(p.error));
+      setTimeout(poll, 800);
+    }).catch(fail);
+  }
+
+  function fail(e) {
+    $('error').hidden = false;
+    $('error').textContent = 'Upload failed: ' + e.message + '. Pick the video and try again.';
+    $('upload-btn').disabled = false;
+  }
+
+  load();
+</script>
+</body>
+</html>

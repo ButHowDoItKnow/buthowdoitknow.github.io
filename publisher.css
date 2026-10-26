@@ -1,0 +1,38 @@
+/* Cyrex Publisher page: the shared night-sky styles plus a few controls. */
+.btn {
+  font: 700 1rem var(--body);
+  padding: 0.7rem 1.4rem;
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  background: rgba(10, 15, 38, 0.55);
+  color: var(--gold);
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) { background: var(--gold); color: var(--ink); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.code {
+  font: 700 0.95rem/1.4 ui-monospace, monospace;
+  word-break: break-all;
+  white-space: pre-wrap;
+  background: rgba(10, 15, 38, 0.7);
+  border: 2px solid var(--cyan);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.account { display: flex; align-items: center; gap: 1rem; margin: 0 0 1rem; }
+.account img { border-radius: 50%; border: 2px solid var(--gold); background: var(--night); }
+
+.videos { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.videos li { border-top: 1px solid rgba(185, 195, 211, 0.18); }
+.videos li:last-child { border-bottom: 1px solid rgba(185, 195, 211, 0.18); }
+.videos label { display: flex; gap: 0.75rem; align-items: center; padding: 0.75rem 0; cursor: pointer; }
+.videos input { accent-color: var(--gold); width: 1.1rem; height: 1.1rem; }
+
+.bar { height: 0.75rem; border-radius: 999px; background: rgba(185, 195, 211, 0.18); overflow: hidden; margin: 1.5rem 0 0.5rem; }
+#fill { height: 100%; width: 0; background: var(--gold); transition: width 0.4s; }
+.muted { color: var(--muted); }
+.done { color: var(--mint); font-weight: 700; }
+.error { color: #FF8A8A; font-weight: 700; }

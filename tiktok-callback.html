@@ -22,7 +22,7 @@
 <main>
   <nav><a href="index.html">Home</a></nav>
   <h1>Connect TikTok</h1>
-  <!-- The code stays on this page: nothing here sends it anywhere. The team copies it into Cyrex Publisher. -->
+  <!-- The code only goes to the publisher helper on the team's own computer (127.0.0.1); if that isn't running, it is shown here to copy. -->
   <div id="ok" hidden>
     <p>TikTok approved the connection. Copy this one-time code into Cyrex Publisher. It expires in a few minutes.</p>
     <div class="code" id="code"></div>
@@ -34,12 +34,30 @@
 <script src="stars.js"></script>
 <script>
   var q = new URLSearchParams(location.search);
-  if (q.get('code')) {
+  function showCode() {
     document.getElementById('ok').hidden = false;
     document.getElementById('code').textContent = q.get('code');
     document.getElementById('copy').onclick = function () {
       navigator.clipboard.writeText(q.get('code')).then(function () { document.getElementById('copy').textContent = 'Copied'; });
     };
+  }
+  if (q.get('code')) {
+    var expected = sessionStorage.getItem('tt_state');
+    if (expected && expected !== q.get('state')) {
+      var e = document.getElementById('err');
+      e.hidden = false;
+      e.textContent = 'This sign-in did not start from Cyrex Publisher, so it was ignored. Start again from the publisher page.';
+    } else {
+      fetch('http://127.0.0.1:8765/exchange', {method: 'POST', headers: {'Content-Type': 'application/json'},
+                                              body: JSON.stringify({code: q.get('code')})})
+        .then(function (r) { return r.json(); })
+        .then(function (r) {
+          if (r.error) throw new Error(r.error);
+          sessionStorage.removeItem('tt_state');
+          location.replace('publisher.html');
+        })
+        .catch(showCode);
+    }
   } else if (q.get('error')) {
     var e = document.getElementById('err');
     e.hidden = false;
